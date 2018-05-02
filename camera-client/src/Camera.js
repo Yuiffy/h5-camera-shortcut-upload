@@ -20,7 +20,6 @@ class Camera extends React.Component {
       audioSelect: null,
       quality: 0.92,
     };
-    this.componentDidMount = this.componentDidMount.bind(this);
     this.drawCanvas = this.drawCanvas.bind(this);
     this.gotDevices = this.gotDevices.bind(this);
     this.sendImage = this.sendImage.bind(this);
@@ -33,7 +32,7 @@ class Camera extends React.Component {
       .then(this.gotDevices);
   }
 
-  componentDidMount() {
+  componentDidUpdate() {
     // 获取所选设备的流，在video中播放
     this.getStream(this.state.cameraSelect, this.state.audioSelect);
   }
@@ -90,15 +89,19 @@ class Camera extends React.Component {
         option.text = deviceInfo.label || `camera ${
         cameras.length + 1}`;
         cameras.push(option);
+        // console.log('camera source/device: ', deviceInfo);
       } else {
         console.log('Found one other kind of source/device: ', deviceInfo);
       }
     }
-    this.setState({
+    const newState = {
       ...this.state,
       audios,
       cameras,
-    });
+    };
+    if (cameras.length > 0) newState.cameraSelect = cameras[0].value;
+    if (audios.length > 0) newState.audioSelect = audios[0].value;
+    this.setState(newState);
   }
 
   // 将video画到canvas里
@@ -132,14 +135,11 @@ class Camera extends React.Component {
   cameraChange(e) {
     const {value} = e.target;
     this.setState({...this.state, cameraSelect: value});
-    this.getStream(value, this.state.audioSelect);
-    // console.log('camerahange', value);
   }
 
   audioChange(e) {
     const {value} = e.target;
     this.setState({...this.state, audioSelect: value});
-    this.getStream(this.state.cameraSelect, value);
   }
 
   sendImage() {
