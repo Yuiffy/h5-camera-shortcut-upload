@@ -193,7 +193,8 @@ class Camera extends React.Component {
           }}
           muted
           autoPlay
-          playsinline
+          playsInline
+          controls
           width={width}
           height={height}
           style={{width: '50%', height: '100%'}}

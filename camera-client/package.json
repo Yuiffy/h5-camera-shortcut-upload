@@ -11,7 +11,13 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "gh-pages -d build",
+    "build-deploy": "react-scripts build && gh-pages -d build"
   },
-  "proxy": "http://localhost:5000"
+  "proxy": "http://localhost:5000",
+  "homepage": "https://www.yuiffy.com/h5-camera-shortcut-upload",
+  "devDependencies": {
+    "gh-pages": "^1.1.0"
+  }
 }
